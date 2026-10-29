@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+ {% block header %}
+   <h1></h1>
+ {% endblock %}
+ {% block header2 %}
+   <h1>Выгрузить Данные в Эксель</h1>
+ {% endblock %}
+ {% block content %}
+   <form method="get">
+     {{ form }}
+     <input type="submit" value="Ввести">Выгрузить
+   </form>
+     <a href="{% url 'Status:sogl' %}" class="btn btn-secondary">Отмена</a>
+ {% endblock %}

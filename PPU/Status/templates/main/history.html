@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+ {% block header %}
+   <h1></h1>
+ {% endblock %}
+ {% block header2 %}
+   <h1>История изменений статуса мероприятия {{ sogl.name }}</h1>
+ {% endblock %}
+ {% block content %}
+   <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Статус</th>
+          <th>Оплачено</th>
+	  <th>Дата</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for el in history %}
+         <tr>
+          <td>{{el.status}}</td>
+          <td>{{el.payed}}</td>
+	  <td>{{el.date|date:'d.m.Y H:i'}}</td>
+         </tr>
+      {% empty %}
+      <tr><td colspan="3"></td></tr>
+    {% endfor %}
+  </tbody>
+    </table>
+     <a href="{% url 'Status:sogl' %}" class="btn btn-secondary">Назад</a>
+ {% endblock %}

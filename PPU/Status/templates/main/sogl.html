@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+ {% block header %}
+   <h1>Мероприятия</h1>
+ {% endblock %}
+ {% block header2 %}
+   <form method="get">
+   <div class="d-flex align-items-end gap-3">
+       <div>{{ form2 }}</div>
+       <div>{{ form3 }}</div>
+       <div>{{ form4 }}</div>
+      <div>
+     <button type="submit" class="btn btn-primary">Ввести</button>
+     <a href="{% url 'Status:sogl' %}" class="btn btn-secondary">Сбросить</a>
+     </div>
+    </div> 
+    </form>
+    <h1><a href="{% url 'Status:create_sogl' %}" class="btn btn-success">Создать</a></h1>
+    <h1><a href="{% url 'Status:export_sogl' %}" class="btn btn-success">Выгрузить</a></h1>
+ {% endblock %}
+ {% block content %}
+  <h4>Количество мероприятий:</h4>
+    <p>Количество: <b>{{ count_el }}</b></p>
+  <h4>Всего Оплачено:</h4>
+    <p>Сумма: <b>{{ sum_val }} тыс.руб</b></p>
+    <p>Оплачено: <b>{{ sum_pay }} тыс.руб</b></p>
+    <p>Процент выполнения: <b>{{ percent|floatformat:2 }} %</b></p>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Наименование</th>
+          <th>Стоимость</th>
+          <th>Оплачено</th>
+          <th>Статус</th>
+          <th>Подразделение</th>
+	        <th>Департамент</th>
+          <th>Нужно Актуализировать</th>
+	        <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for el in sogl_list %}
+         <tr>
+          <td>{{el.name}}</td>
+          <td>{{el.value}}</td>
+          <td>{{el.payed}}</td>
+          <td>{{el.status}}</td>
+          <td>{{el.unit__unit}}</td>
+          <td>{{el.departure__departure}}</td>
+          <td>{{el.needs_act__needs_act}}</td>
+	  <td>
+      <a href="{% url 'Status:edit_sogl' el.id %}" class="btn btn-info btn-sm">Изменить</a>
+      <a href="{% url 'Status:sogl_history' el.id %}" class="btn btn-info btn-sm">История</a>
+      <a href="{% url 'Status:sogl_delete' el.id %}" class="btn btn-danger btn-sm">Удалить</a>
+          </td>
+         </tr>
+      {% empty %}
+      <tr><td colspan="9"></td></tr>
+    {% endfor %}
+  </tbody>
+    </table>
+ {% endblock %}

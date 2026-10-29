@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+ {% block header %}
+   <h1></h1>
+ {% endblock %}
+ {% block header2 %}
+   <h1>Удалить мероприятие</h1>
+ {% endblock %}
+ {% block content %}
+   <p>Удалить мероприятие «{{ object.name }}»?</p>
+   <form method="post">
+     {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Удалить</button>
+    <a href="{% url 'Status:sogl' %}" class="btn btn-secondary">Отмена</a>
+   </form>
+ {% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+ {% block header %}
+   <h1></h1>
+ {% endblock %}
+ {% block header2 %}
+   <h1>Добавить новое мероприятие</h1>
+ {% endblock %}
+ {% block content %}
+   <form method="post">
+     {% csrf_token %}
+     {{ form.as_p }}
+     <button type="submit" class="btn btn-primary">Сохранить</button>
+     <a href="{% url 'Status:sogl' %}" class="btn btn-secondary">Отмена</a>
+   </form>
+ {% endblock %}
