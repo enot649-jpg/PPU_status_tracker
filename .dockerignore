@@ -5,3 +5,5 @@ db.sqlite3
 .git
 .gitignore
 .env
+.xlsx
+import.py

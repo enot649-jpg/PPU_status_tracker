@@ -4,7 +4,16 @@ from .models import Sogl, Units, Departure, Act
 class UnitForm(forms.Form):
     unit = forms.ModelChoiceField(
         queryset = Units.objects.all(),
-        label = 'Подразделение',
+        label = 'Ответственный за заполнение статуса',
+        required = False,
+        empty_label = '-'
+    )
+
+
+class InitForm(forms.Form):
+    init = forms.ModelChoiceField(
+        queryset = Units.objects.all(),
+        label = 'Инициатор',
         required = False,
         empty_label = '-'
     )
@@ -13,7 +22,7 @@ class UnitForm(forms.Form):
 class DepartureForm(forms.Form):
     departure = forms.ModelChoiceField(
         queryset=Departure.objects.all(),
-        label='Департамент',
+        label='Стадия реализации',
         required=False,
         empty_label="-"
     )   
@@ -33,5 +42,5 @@ class NewForm(forms.ModelForm):
         model = Sogl
         fields = ('name', 'meropr', 'dogovor',
                   'value', 'payed', 'status',
-                  'unit', 'group', 'departure', 'needs_act',
+                  'unit', 'init', 'group', 'departure', 'needs_act',
         )

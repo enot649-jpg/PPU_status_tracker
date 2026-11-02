@@ -17,6 +17,7 @@ class TestLogic(TestCase):
                 payed=100.00,
                 status=f'Тестовый Статус {index}',
                 unit=cls.unit,
+                init=cls.unit,
                 group='Приобретение',
                 departure=cls.department,
                 needs_act=cls.needs_act,

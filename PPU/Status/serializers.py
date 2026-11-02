@@ -5,7 +5,7 @@ class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = History
         fields = (
-        'id', 'status', 'payed', 'date',
+        'id', 'status', 'payed', 'date', 'departure',
         )
 
 class SoglSerializer(serializers.ModelSerializer):
@@ -15,6 +15,6 @@ class SoglSerializer(serializers.ModelSerializer):
         fields = (
         'id', 'name', 'modified_at', 'meropr', 'dogovor',
         'value', 'payed', 'status',
-        'unit', 'group', 'departure', 'needs_act', 'history',
+        'unit', 'init', 'group', 'departure', 'needs_act', 'history',
         )
 

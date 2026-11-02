@@ -17,6 +17,7 @@ class TestForms(TestCase):
             'payed': 100.00,
             'status': 'Тестовый Статус',
             'unit': cls.unit.pk,
+            'init': cls.unit.pk,
             'group': 'Приобретение',
             'departure': cls.departure.pk,
             'needs_act': cls.needs_act.pk,

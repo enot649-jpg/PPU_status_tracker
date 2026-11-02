@@ -17,6 +17,7 @@ class TestRotes(TestCase):
             payed=100,
             status='Тест',
             unit=self.unit, 
+            init=self.unit,
             group='Тест',
             departure=self.department, 
             needs_act=self.act

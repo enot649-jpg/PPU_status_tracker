@@ -9,13 +9,13 @@ admin.site.register(History)
 
 class SoglAdmin(admin.ModelAdmin):
     list_display = ('name', 'meropr', 'dogovor', 'value', 'payed',
-    'status', 'unit', 'group', 'departure',
+    'status', 'unit', 'init', 'group', 'departure',
     'needs_act',
     )
-    list_editable = ('payed', 'status', 'departure', 'needs_act',
+    list_editable = ('payed', 'status', 'departure', 'needs_act', 'unit',
     )
-    search_fields = ('name',)
-    list_filter = ('departure', 'needs_act', 'unit',)
+    search_fields = ('name', 'init',)
+    list_filter = ('departure', 'needs_act', 'unit', 'init',)
     list_display_links = ('name',)
     empty_value_display = 'Не указано'
 

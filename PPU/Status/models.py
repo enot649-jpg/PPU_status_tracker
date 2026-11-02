@@ -16,7 +16,7 @@ class Units(models.Model):
 class Departure(models.Model):
     departure = models.CharField(
     max_length = 128,
-    verbose_name='Департамент'
+    verbose_name='Стадия реализации'
     )
 
     class Meta:
@@ -60,6 +60,13 @@ class History(models.Model):
     on_delete = models.CASCADE,
     related_name='history',
     )
+    departure = models.ForeignKey(
+        'Departure', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        verbose_name='Стадия реализации'
+    )
 
     class Meta:
         verbose_name = 'История'
@@ -81,7 +88,7 @@ class BaseModel(models.Model):
     meropr = models.CharField(
     default='-',
     max_length = 128,
-    verbose_name='Номер Мероприятия',
+    verbose_name='Код Мероприятия',
     help_text='Номер мероприятия, не более 128 символов',
     )
     dogovor = models.CharField(
@@ -106,8 +113,16 @@ class BaseModel(models.Model):
     )
     unit = models.ForeignKey(
     'Units',
-    on_delete = models.CASCADE,
-    verbose_name='Подразделение',
+    on_delete = models.SET_NULL,
+    null=True, 
+    verbose_name='Ответственный за заполнение статуса',
+    )
+    init = models.ForeignKey(
+    'Units',
+    on_delete = models.SET_NULL,
+    related_name='init_sogl',
+    null=True,
+    verbose_name='Инициатор',
     )
     group = models.CharField(
     default= '-',
@@ -117,12 +132,13 @@ class BaseModel(models.Model):
     )
     departure = models.ForeignKey(
     'Departure',
-    on_delete = models.CASCADE,
-    verbose_name='Депратамент',
+    on_delete = models.SET_NULL,
+    null=True, 
+    verbose_name='Стадия реализации',
     )
     needs_act = models.ForeignKey(
     'Act',
-    on_delete = models.CASCADE, 
+    on_delete = models.SET_NULL, 
     null=True, 
     blank=True,
     verbose_name='Необходимо актуализировать',
@@ -139,7 +155,7 @@ class BaseModel(models.Model):
 class Sogl(BaseModel):
 
     class Meta:
-        verbose_name = 'Согласованные'
+        verbose_name = 'Инвестиционные мероприятия'
 
 
 

@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.db.models import Sum, Count
 from .models import Sogl, History
-from .forms import UnitForm, NewForm, DepartureForm, ActForm
+from .forms import UnitForm, NewForm, DepartureForm, ActForm, InitForm
 from rest_framework import generics
 from .serializers import SoglSerializer
 
@@ -14,9 +14,12 @@ def sogl(request):
     unit_query = request.GET.get('unit', '').strip()
     departure_query = request.GET.get('departure', '').strip()
     act_query = request.GET.get('needs_act', '').strip()
+    init_query = request.GET.get('init', '').strip()
     for_sum = Sogl.objects.all()
     if unit_query:
         for_sum = for_sum.filter(unit_id=unit_query)
+    if init_query:
+            for_sum = for_sum.filter(init_id=init_query)
     if departure_query:
         for_sum = for_sum.filter(departure_id=departure_query)
     if act_query:
@@ -34,9 +37,9 @@ def sogl(request):
     else:
         percent = 0
     sogl_list = for_sum.values(
-    'id', 'group', 'name', 'value', 'payed', 'status', 'unit__unit',
+    'id', 'group', 'name', 'value', 'payed', 'status', 'unit__unit', 'init__unit',
     'departure__departure', 'needs_act__needs_act'
-    ).order_by('group')
+    ).order_by('departure__departure', 'group')
     template ='main/sogl.html'
     context = {
     'sogl_list':sogl_list,
@@ -47,7 +50,9 @@ def sogl(request):
     'form2': UnitForm(initial={'unit': unit_query}),
     'form3': DepartureForm(initial={'departure': departure_query}),
     'form4': ActForm(initial={'needs_act': act_query}),
+    'form5': InitForm(initial={'init': init_query}),
     }
+    print(f"DEBUG: percent = {percent}, type = {type(percent)}")
     return render(request, template, context)
 
 def delete_sogl(request, pk):
@@ -67,6 +72,8 @@ def create_sogl(request):
         saved = form.save()
         History.objects.create(
             status = saved.status,
+            payed = saved.payed,
+            departure = saved.departure,
             name = saved
             )
         return redirect('Status:sogl')
@@ -78,13 +85,16 @@ def edit_sogl(request, pk):
     if request.method == 'POST':
         old1 = instance.status
         old2 = instance.payed
+        old3 = instance.departure
         form = NewForm(request.POST or None, instance=instance)
         if form.is_valid():
             saved = form.save()
-            if old1 != saved.status or old2 != saved.payed:
+            if old1 != saved.status or old2 != saved.payed or \
+            old3 != saved.departure:
                 History.objects.create(
                 status = saved.status,
                 payed = saved.payed,
+                departure = saved.departure,
                 name = saved
                 )
         return redirect('Status:sogl')
