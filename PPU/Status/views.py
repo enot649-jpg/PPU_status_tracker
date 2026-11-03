@@ -52,7 +52,6 @@ def sogl(request):
     'form4': ActForm(initial={'needs_act': act_query}),
     'form5': InitForm(initial={'init': init_query}),
     }
-    print(f"DEBUG: percent = {percent}, type = {type(percent)}")
     return render(request, template, context)
 
 def delete_sogl(request, pk):
