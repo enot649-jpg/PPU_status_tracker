@@ -41,6 +41,7 @@ cp .env.example .env
 4) Запустить приложение используя Docker:
 docker-compose up -d --build
 5) Выполнить миграции:
+docker-compose exec status python manage.py makemigrations
 docker-compose exec status python manage.py migrate
 
 Переход на страницу:
